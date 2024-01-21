@@ -5,7 +5,7 @@ import { config } from "@tamagui/config/v2";
 import { View } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import BottomSheet from "./components/BottomSheet";
+import Sheet from "./components/BottomSheet/Sheet";
 import Map from "./components/Map";
 import React from "react";
 
@@ -24,7 +24,7 @@ export default function App() {
         <TamaguiProvider config={tamaguiConfig}>
           <View style={{ flex: 1 }}>
             <Map />
-            <BottomSheet />
+            <Sheet />
           </View>
         </TamaguiProvider>
       </BottomSheetModalProvider>
