@@ -7,6 +7,8 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { useState } from "react";
 import { supabase } from "../../utils/supabase";
 import { StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ROUTE_ID_STORAGE_KEY } from "../../utils/constants";
 
 type InsertRouteProps = {
   destinationPlaceId: string;
@@ -16,20 +18,26 @@ type InsertRouteProps = {
 };
 
 const insertRoute = async (props: InsertRouteProps) => {
-  const res = await supabase.from("routes").insert({
-    destination_place_id: props.destinationPlaceId,
-    created_by: props.createdBy,
-    full_name: props.fullName,
-    phone_number: props.phoneNumber,
-  });
+  const res = await supabase
+    .from("routes")
+    .insert({
+      destination_place_id: props.destinationPlaceId,
+      created_by: props.createdBy,
+      full_name: props.fullName,
+      phone_number: props.phoneNumber,
+    })
+    .select();
 
-  if (res.status !== 201) {
+  if (!res.data || res.status !== 201) {
     console.error(res.error);
     throw new Error("Failed to insert route");
   }
+
+  await AsyncStorage.setItem(ROUTE_ID_STORAGE_KEY, res.data[0].id.toString());
 };
 
 const MainBody = () => {
+  let countRabbits = 1;
   const [destinationPlaceId, setDestinationPlaceId] = useState<string | null>(
     null
   );
