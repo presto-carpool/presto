@@ -2,7 +2,7 @@ import "@tamagui/core/reset.css";
 import { TamaguiProvider, createTamagui } from "tamagui";
 import { config } from "@tamagui/config/v2";
 
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BottomSheet from "./components/BottomSheet";
@@ -21,7 +21,7 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         <TamaguiProvider config={tamaguiConfig}>
-          <View style={styles.container}>
+          <View style={{ flex: 1 }}>
             <Map />
             <BottomSheet />
           </View>
@@ -30,13 +30,3 @@ export default function App() {
     </GestureHandlerRootView>
   );
 }
-
-const styles = StyleSheet.create({
-  map: {
-    width: "100%",
-    height: "100%",
-  },
-  container: {
-    flex: 1,
-  },
-});
