@@ -9,7 +9,7 @@ type PendingBodyProps = {
 const PendingBody = (props: PendingBodyProps) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
+      <Text style={[styles.text, { marginTop: -70 }]}>
         Looking for a
         {props.route.created_by === "driver" ? " passenger" : " driver"}
       </Text>
@@ -44,10 +44,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#6B4FDE", // Button background color
     paddingVertical: 10,
     paddingHorizontal: 20,
+    marginTop: 20,
     borderRadius: 5,
   },
   cancelButtonText: {
-    color: "#fff", // Button text color
+    color: "#fff", // Button text color,
     fontWeight: "bold",
   },
   animation: {
