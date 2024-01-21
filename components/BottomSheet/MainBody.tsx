@@ -37,7 +37,6 @@ const insertRoute = async (props: InsertRouteProps) => {
 };
 
 const MainBody = () => {
-  let countRabbits = 1;
   const [destinationPlaceId, setDestinationPlaceId] = useState<string | null>(
     null
   );

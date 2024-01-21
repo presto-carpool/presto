@@ -5,11 +5,13 @@ import { ROUTE_ID_STORAGE_KEY } from "../../utils/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PendingBody from "./PendingBody";
 import { supabase } from "../../utils/supabase";
+import MatchedBody from "./MatchedBody";
 
 const BottomSheet = () => {
   const bottomSheetRef = useRef<GorhomBottomSheet>(null);
   const snapPoints = useMemo(() => ["25%", "50%"], []);
-  const [route, setRoute] = useState<any | null>(null);
+  const [myRoute, setMyRoute] = useState<any | null>(null);
+  const [foundRoute, setFoundRoute] = useState<any | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,24 +26,50 @@ const BottomSheet = () => {
         return;
       }
 
-      const response = await supabase
+      const routeQueryResponse = await supabase
         .from("routes")
         .select("*")
         .eq("id", routeId);
-      if (response.error) {
-        console.error("Error fetching route:", response.error);
+      if (routeQueryResponse.error) {
+        console.error("Error fetching route:", routeQueryResponse.error);
         return;
       }
+      setMyRoute(routeQueryResponse.data[0]);
 
-      setRoute(response.data[0]);
+      const res = await supabase
+        .from("matches")
+        .select("*")
+        .or(`driver_route_id.eq.${routeId},rider_route_id.eq.${routeId}`);
+      if (res.error) {
+        console.error("Error fetching matches:", res.error);
+        return;
+      }
+      if (res.status === 200 && res?.data && res.data.length > 0) {
+        const match = res.data[0];
+        const foundRouteQuery = await supabase
+          .from("routes")
+          .select("*")
+          .eq("id", match.driver_route_id);
+        if (foundRouteQuery.error) {
+          console.error("Error fetching found route:", foundRouteQuery.error);
+          return;
+        }
+        if (foundRouteQuery.status === 200 && foundRouteQuery?.data) {
+          setFoundRoute(foundRouteQuery.data[0]);
+        }
+      }
     };
 
     fetchData();
-  });
+  }, []);
 
   return (
     <GorhomBottomSheet ref={bottomSheetRef} index={1} snapPoints={snapPoints}>
-      {!route ? <MainBody /> : <PendingBody route={route} />}
+      {!myRoute && <MainBody />}
+      {myRoute && !foundRoute && <PendingBody myRoute={myRoute} />}
+      {myRoute && foundRoute && (
+        <MatchedBody myRoute={myRoute} foundRoute={foundRoute} />
+      )}
     </GorhomBottomSheet>
   );
 };

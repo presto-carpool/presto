@@ -1,9 +1,9 @@
 import React from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
-import LottieView from 'lottie-react-native';
+import LottieView from "lottie-react-native";
 
 type PendingBodyProps = {
-  route: any;
+  myRoute: any;
 };
 
 const PendingBody = (props: PendingBodyProps) => {
@@ -11,10 +11,10 @@ const PendingBody = (props: PendingBodyProps) => {
     <View style={styles.container}>
       <Text style={[styles.text, { marginTop: -70 }]}>
         Looking for a
-        {props.route.created_by === "driver" ? " passenger" : " driver"}
+        {props.myRoute.created_by === "driver" ? " passenger" : " driver"}
       </Text>
       <LottieView
-        source={require('./lottie-animations/loadingAnimation.json')} // Provide the correct path
+        source={require("./lottie-animations/loadingAnimation.json")} // Provide the correct path
         autoPlay
         loop
         style={styles.animation}
