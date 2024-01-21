@@ -2,6 +2,7 @@ import MapView from "react-native-maps";
 import { StyleSheet } from "react-native";
 import MapViewDirections from "react-native-maps-directions";
 import { Button, Input } from "tamagui";
+import React from "react";
 
 const Map = () => {
   return (

@@ -7,10 +7,11 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BottomSheet from "./components/BottomSheet";
 import Map from "./components/Map";
+import React from "react";
 
 const tamaguiConfig = createTamagui(config);
 
-// this makes typescript properly type everything based on the config
+// this makes typescript properly type everything based on ithe config
 type Conf = typeof tamaguiConfig;
 declare module "tamagui" {
   interface TamaguiCustomConfig extends Conf {}
