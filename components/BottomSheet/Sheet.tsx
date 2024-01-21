@@ -12,6 +12,9 @@ const BottomSheet = () => {
   const snapPoints = useMemo(() => ["25%", "50%"], []);
   const [myRoute, setMyRoute] = useState<any | null>(null);
   const [foundRoute, setFoundRoute] = useState<any | null>(null);
+  const [activePage, setActivePage] = useState<
+    "main" | "pending" | "matched" | null
+  >(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,6 +61,14 @@ const BottomSheet = () => {
           setFoundRoute(foundRouteQuery.data[0]);
         }
       }
+
+      if (!myRoute) {
+        setActivePage("main");
+      } else if (myRoute && !foundRoute) {
+        setActivePage("pending");
+      } else if (myRoute && foundRoute) {
+        setActivePage("matched");
+      }
     };
 
     fetchData();
@@ -65,9 +76,13 @@ const BottomSheet = () => {
 
   return (
     <GorhomBottomSheet ref={bottomSheetRef} index={1} snapPoints={snapPoints}>
-      {!myRoute && <MainBody />}
-      {myRoute && !foundRoute && <PendingBody myRoute={myRoute} />}
-      {myRoute && foundRoute && (
+      {activePage === "main" && (
+        <MainBody onRouteCreated={() => setActivePage("pending")} />
+      )}
+      {activePage === "pending" && (
+        <PendingBody onCancel={() => setActivePage("main")} myRoute={myRoute} />
+      )}
+      {activePage === "matched" && (
         <MatchedBody myRoute={myRoute} foundRoute={foundRoute} />
       )}
     </GorhomBottomSheet>

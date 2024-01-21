@@ -1,9 +1,11 @@
 import React from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import LottieView from "lottie-react-native";
+import { cancelUserRoute } from "../../utils/routes";
 
 type PendingBodyProps = {
   myRoute: any;
+  onCancel: () => void;
 };
 
 const PendingBody = (props: PendingBodyProps) => {
@@ -19,7 +21,13 @@ const PendingBody = (props: PendingBodyProps) => {
         loop
         style={styles.animation}
       />
-      <TouchableOpacity style={styles.cancelButton}>
+      <TouchableOpacity
+        style={styles.cancelButton}
+        onPress={() => {
+          cancelUserRoute();
+          props.onCancel();
+        }}
+      >
         <Text style={styles.cancelButtonText}>Cancel</Text>
       </TouchableOpacity>
     </View>

@@ -5,38 +5,14 @@ import { Button, Text } from "tamagui";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useState } from "react";
-import { supabase } from "../../utils/supabase";
 import { StyleSheet } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ROUTE_ID_STORAGE_KEY } from "../../utils/constants";
+import { insertRoute } from "../../utils/routes";
 
-type InsertRouteProps = {
-  destinationPlaceId: string;
-  createdBy: "driver" | "rider";
-  fullName: string;
-  phoneNumber: string;
+type MainBodyProps = {
+  onRouteCreated: () => void;
 };
 
-const insertRoute = async (props: InsertRouteProps) => {
-  const res = await supabase
-    .from("routes")
-    .insert({
-      destination_place_id: props.destinationPlaceId,
-      created_by: props.createdBy,
-      full_name: props.fullName,
-      phone_number: props.phoneNumber,
-    })
-    .select();
-
-  if (!res.data || res.status !== 201) {
-    console.error(res.error);
-    throw new Error("Failed to insert route");
-  }
-
-  await AsyncStorage.setItem(ROUTE_ID_STORAGE_KEY, res.data[0].id.toString());
-};
-
-const MainBody = () => {
+const MainBody = (props: MainBodyProps) => {
   const [destinationPlaceId, setDestinationPlaceId] = useState<string | null>(
     null
   );
@@ -130,14 +106,15 @@ const MainBody = () => {
 
       <Button
         style={styles.goButton}
-        onPress={() =>
+        onPress={() => {
           insertRoute({
             destinationPlaceId: destinationPlaceId!,
             createdBy: rideType === "ride" ? "rider" : "driver",
             fullName: name,
             phoneNumber: phoneNumber,
-          })
-        }
+          });
+          props.onRouteCreated();
+        }}
       >
         <Text style={styles.goButtonText}>Go!</Text>
       </Button>
