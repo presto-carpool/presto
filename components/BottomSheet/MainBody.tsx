@@ -44,24 +44,6 @@ const MainBody = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [rideType, setRideType] = useState<string>("ride"); // Default to "ride"
 
-  const formatPhoneNumber = (input: string) => {
-    const cleaned = input.replace(/\D/g, "");
-
-    if (cleaned === "") {
-      return "";
-    }
-
-    if (/^\d{10}$/.test(cleaned)) {
-      return `+1 ${cleaned.slice(0, 3)}-${cleaned.slice(3, 6)}-${cleaned.slice(
-        6
-      )}`;
-    } else if (input.startsWith("+1 ")) {
-      return input;
-    } else {
-      return `+1 ${input}`;
-    }
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.toggleGroupContainer}>
@@ -129,7 +111,7 @@ const MainBody = () => {
         style={styles.input}
         placeholder="Phone Number"
         value={phoneNumber}
-        onChangeText={(text) => setPhoneNumber(formatPhoneNumber(text))}
+        onChangeText={(text) => setPhoneNumber(text)}
       />
 
       <GooglePlacesAutocomplete
@@ -191,7 +173,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   activeToggleItem: {
-    backgroundColor: "#007BFF",
+    backgroundColor: "#6B4FDE",
   },
   inactiveToggleItem: {
     backgroundColor: "#E0E0E0",
