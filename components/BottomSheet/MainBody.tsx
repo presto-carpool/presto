@@ -12,6 +12,8 @@ type MainBodyProps = {
   onRouteCreated: () => void;
 };
 
+require('dotenv').config();
+
 const MainBody = (props: MainBodyProps) => {
   const [destinationPlaceId, setDestinationPlaceId] = useState<string | null>(
     null
@@ -96,7 +98,7 @@ const MainBody = (props: MainBodyProps) => {
           setDestinationPlaceId(data.place_id);
         }}
         query={{
-          key: "AIzaSyDn9nTNd7etbjiCTE3IwYnGoCi9kZwBR7w",
+          key: process.env.EXPO_PUBLIC_GMAPS_API_KEY,
           language: "en",
         }}
         textInputProps={{
