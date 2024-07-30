@@ -15,11 +15,7 @@ const Map = () => {
         longitudeDelta: 0.05,
       }}
     >
-      {/* <MapViewDirections */}
-      {/*   origin={gastown} */}
-      {/*   destination={englishBay} */}
-      {/*   apikey={"AIzaSyDn9nTNd7etbjiCTE3IwYnGoCi9kZwBR7w"} */}
-      {/* /> */}
+
     </MapView>
   );
 };
