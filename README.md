@@ -1,12 +1,8 @@
-<p float="left">
-    <img src="./public/gallery.jpg" height="300"  />
-    <iframe height="300" src="https://www.youtube.com/embed/oCDNvyAaHsU?si=CMeafqtD17YamoWl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</p>
+<img src="./public/gallery.jpg" />
 
 
 # 🌱 Presto - Community Carpool
 Presto takes the most user centered features of cabbing and carpooling programs into one application. Resulting in a low-cost, highly efficient live matchmaking system between passengers and drivers.
-
 
 ### Inspiration
 Vancouver can be a place, where it is hard to form long-term genuine relationships with people. Moreover, Vancouver, like most big North American cities is car-centric, so there are simply fewer interactions with other people. We found a niche that existed between carpooling and cabbing apps - where drivers would be incentivized to pick up people to form better relationships or make new friends sharing the same route. Thus came Presto, the community live carpooling app.
